@@ -1,0 +1,63 @@
+name: Bug report
+description: A lab, reference or generated proxy doesn't behave as documented.
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This issue is public. **Before you paste anything, remove** API keys, tokens, KVM values, service account keys, project IDs and numbers, organization and environment names, hostnames and personal data. Replace them with placeholders such as `PROJECT_ID` or `ORG`.
+
+        Found a security problem? Don't open an issue. Follow the [security policy](https://github.com/rajeevramani/apigee-x-ai-gateway/blob/main/SECURITY.md).
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Lab 0 — readiness
+        - Lab 1 — routing
+        - Lab 2 — token quota
+        - Lab 3 — spending budget
+        - Lab 4 — Model Armor
+        - Lab 5 — burst protection
+        - Lab 6 — semantic cache
+        - Combined build
+        - Skill behaviour (SKILL.md or references)
+        - Offline tests
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened
+      description: What you did, what you expected and what happened instead. Include the step number if you were following a lab.
+    validations:
+      required: true
+  - type: textarea
+    id: error
+    attributes:
+      label: Error output
+      description: Redacted HTTP status, response body, `apigeecli` or `gcloud` output, or agent output.
+      render: text
+  - type: input
+    id: version
+    attributes:
+      label: Skill version or commit
+      description: The `version` in SKILL.md, or the commit you installed.
+      placeholder: 1.0.0
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Agent and model, Apigee X organization type (evaluation, subscription or pay-as-you-go), region, and backend model provider.
+    validations:
+      required: true
+  - type: checkboxes
+    id: redaction
+    attributes:
+      label: Redaction
+      options:
+        - label: I removed secrets, keys, project IDs and other identifying values from everything above.
+          required: true

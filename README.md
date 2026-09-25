@@ -307,6 +307,16 @@ More detail: [routing](references/model-routing.md) · [API products](references
 
 ---
 
+## Support and issues
+
+Bugs, feature requests and questions all go in [GitHub Issues](https://github.com/rajeevramani/apigee-x-ai-gateway/issues/new/choose). Pick the matching form.
+
+Issues are public. Before posting, remove API keys, tokens, KVM values, project IDs, organization names and anything from `lab-config.md` or `evidence/`.
+
+Report security problems privately, as described in the [security policy](SECURITY.md).
+
+---
+
 ## Licence
 
 Copyright 2026 Rajeev Ramani. Licensed under the [Apache License, Version 2.0](LICENSE).

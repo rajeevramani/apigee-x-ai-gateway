@@ -1,0 +1,26 @@
+name: Feature request
+description: Suggest a gateway capability, lab or improvement.
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Check [feature status](https://github.com/rajeevramani/apigee-x-ai-gateway/blob/main/references/capability-status.md) and the "Not supported yet" list in the README first. Don't include secrets, project IDs or other identifying values.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What are you trying to do with your AI gateway, and what gets in the way today?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed change
+      description: The capability, policy or lab you'd like. Link to Apigee X documentation if relevant.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
