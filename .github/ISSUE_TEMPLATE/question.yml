@@ -1,0 +1,19 @@
+name: Question
+description: Ask how to use the skill or labs.
+labels: ["question"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Check the README's Troubleshooting section first. This issue is public: don't include secrets, project IDs or other identifying values.
+  - type: textarea
+    id: question
+    attributes:
+      label: Question
+      description: What you're trying to do, and which lab or reference you're following.
+    validations:
+      required: true
+  - type: textarea
+    id: tried
+    attributes:
+      label: What you've tried
