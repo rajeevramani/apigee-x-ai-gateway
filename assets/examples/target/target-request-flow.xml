@@ -1,0 +1,9 @@
+<!-- Fragment: merge into TargetEndpoint, not ProxyEndpoint. -->
+<PreFlow name="PreFlow">
+  <Request>
+    <Step><Name>AM-PrepareTargetRequest</Name></Step>
+    <Step><Name>__CREDENTIAL_LOOKUP_POLICY__</Name></Step>
+    <Step><Name>AM-SetUpstreamAuth</Name></Step>
+  </Request>
+  <Response/>
+</PreFlow>

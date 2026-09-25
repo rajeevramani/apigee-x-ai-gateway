@@ -1,0 +1,26 @@
+<!-- Merge guide, NOT a deployable flow. Expand group placeholders into existing Steps.
+     Hit-path execution and fresh-generation provenance MUST pass the runtime trial gate. -->
+<PreFlow name="PreFlow">
+  <Request>
+    <Step><Name>__CALLER_AUTH_POLICY__</Name></Step>
+    <Step><Name>__REQUEST_VALIDATION_POLICY__</Name></Step>
+    <Step><Name>__CACHE_ELIGIBILITY_AND_PROMPT_POLICY__</Name></Step>
+    <Step><Name>__EXISTING_QUOTA_AND_BURST_STEPS__</Name></Step>
+    <Step><Name>__PROMPT_ARMOR_AND_COMPLETENESS_STEPS__</Name></Step>
+    <Step>
+      <Name>SCL-LookupFAQ</Name>
+      <Condition>(private.semantic.enabled = true) and (private.semantic.eligible = true)</Condition>
+    </Step>
+  </Request>
+  <Response>
+    <Step>
+      <Name>LTQ-Count</Name>
+      <Condition>!(SemanticCacheLookup.SCL-LookupFAQ.cache_hit = true) and (__APPROVED_FRESH_COUNT_CONDITION__)</Condition>
+    </Step>
+    <Step><Name>__RESPONSE_ARMOR_VALIDATION_AND_PRIVACY_STEPS__</Name></Step>
+    <Step>
+      <Name>SCP-PopulateFAQ</Name>
+      <Condition>(private.semantic.enabled = true) and (private.semantic.eligible = true) and (SemanticCacheLookup.SCL-LookupFAQ.cache_hit = false) and (__APPROVED_SAFE_POPULATE_CONDITION__)</Condition>
+    </Step>
+  </Response>
+</PreFlow>

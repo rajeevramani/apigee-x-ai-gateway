@@ -1,0 +1,11 @@
+<!-- Replace the lookup SimilaritySearch block ONLY after choosing PSC. -->
+<SimilaritySearch>
+  <VertexAI>
+    <PrivateServiceConnect>
+      <GrpcEndpoint>grpc://__PSC_TARGET_HOST__:10000</GrpcEndpoint>
+    </PrivateServiceConnect>
+    <Threshold>__THRESHOLD__</Threshold>
+    <DeployedIndexID>__DEPLOYED_INDEX_ID__</DeployedIndexID>
+    <DistanceMeasureType>__DISTANCE_MEASURE__</DistanceMeasureType>
+  </VertexAI>
+</SimilaritySearch>

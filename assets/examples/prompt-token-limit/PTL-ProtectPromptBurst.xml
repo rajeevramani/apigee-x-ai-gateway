@@ -1,0 +1,7 @@
+<PromptTokenLimit name="PTL-ProtectPromptBurst" continueOnError="false" enabled="true">
+  <UserPromptSource>{private.ptl.prompt}</UserPromptSource>
+  <Identifier ref="__VERIFIED_CALLER_VARIABLE__"/>
+  <Rate>__PROMPT_TOKEN_RATE__</Rate>
+  <UseEffectiveCount>true</UseEffectiveCount>
+  <IgnoreUnresolvedVariables>false</IgnoreUnresolvedVariables>
+</PromptTokenLimit>

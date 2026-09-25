@@ -1,0 +1,5 @@
+<!-- Merge into ProxyEndpoint FaultRules; this identifies PTL violations, not a specific policy instance. -->
+<FaultRule name="prompt-token-rate-exceeded">
+  <Step><Name>AM-PromptBurstExceeded</Name></Step>
+  <Condition>(fault.name = "PromptTokenLimitViolation")</Condition>
+</FaultRule>

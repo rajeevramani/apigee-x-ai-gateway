@@ -1,0 +1,11 @@
+<RaiseFault name="RF-CostConfigMissing" continueOnError="false" enabled="true">
+  <FaultResponse>
+    <Set>
+      <Headers><Header name="Content-Type">application/json</Header></Headers>
+      <Payload contentType="application/json">{"error":{"code":"gateway_misconfigured","message":"Cost budget is not configured for this caller."}}</Payload>
+      <StatusCode>500</StatusCode>
+      <ReasonPhrase>Internal Server Error</ReasonPhrase>
+    </Set>
+  </FaultResponse>
+  <IgnoreUnresolvedVariables>false</IgnoreUnresolvedVariables>
+</RaiseFault>

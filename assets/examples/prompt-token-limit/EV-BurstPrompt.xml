@@ -1,0 +1,10 @@
+<ExtractVariables name="EV-BurstPrompt" continueOnError="false" enabled="true">
+  <Source clearPayload="false">request</Source>
+  <JSONPayload>
+    <Variable name="prompt" type="string">
+      <JSONPath>__PROMPT_TEXT_JSONPATH__</JSONPath>
+    </Variable>
+  </JSONPayload>
+  <VariablePrefix>private.ptl</VariablePrefix>
+  <IgnoreUnresolvedVariables>false</IgnoreUnresolvedVariables>
+</ExtractVariables>

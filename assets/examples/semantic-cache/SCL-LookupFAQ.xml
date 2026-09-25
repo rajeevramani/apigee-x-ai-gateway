@@ -1,0 +1,17 @@
+<SemanticCacheLookup name="SCL-LookupFAQ" continueOnError="false" enabled="true">
+  <IgnoreUnresolvedVariables>false</IgnoreUnresolvedVariables>
+  <UserPromptSource>{private.semantic.prompt}</UserPromptSource>
+  <Embeddings>
+    <VertexAI>
+      <URL>__EMBEDDING_URL__</URL>
+    </VertexAI>
+  </Embeddings>
+  <SimilaritySearch>
+    <VertexAI>
+      <URL>__FIND_NEIGHBORS_URL__</URL>
+      <Threshold>__THRESHOLD__</Threshold>
+      <DeployedIndexID>__DEPLOYED_INDEX_ID__</DeployedIndexID>
+      <DistanceMeasureType>__DISTANCE_MEASURE__</DistanceMeasureType>
+    </VertexAI>
+  </SimilaritySearch>
+</SemanticCacheLookup>

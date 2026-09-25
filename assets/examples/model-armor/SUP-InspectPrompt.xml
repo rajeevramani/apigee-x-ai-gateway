@@ -1,0 +1,8 @@
+<SanitizeUserPrompt name="SUP-InspectPrompt" continueOnError="false" enabled="true">
+  <IgnoreUnresolvedVariables>false</IgnoreUnresolvedVariables>
+  <ModelArmor>
+    <TemplateName>projects/__TEMPLATE_PROJECT__/locations/__TEMPLATE_LOCATION__/templates/__TEMPLATE_ID__</TemplateName>
+  </ModelArmor>
+  <UserPromptSource>{private.armor.prompt}</UserPromptSource>
+  <FunctionResponseSource>{private.armor.prompt}</FunctionResponseSource>
+</SanitizeUserPrompt>

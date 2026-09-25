@@ -1,0 +1,13 @@
+<PreFlow name="PreFlow">
+  <Request>
+    <Step><Name>__CALLER_AUTH_POLICY__</Name></Step>
+    <Step><Name>__REQUEST_VALIDATION_POLICY__</Name></Step>
+    <Step><Name>LTQ-Enforce</Name></Step>
+  </Request>
+  <Response>
+    <Step>
+      <Name>LTQ-Count</Name>
+      <Condition>__APPROVED_COUNT_CONDITION__</Condition>
+    </Step>
+  </Response>
+</PreFlow>

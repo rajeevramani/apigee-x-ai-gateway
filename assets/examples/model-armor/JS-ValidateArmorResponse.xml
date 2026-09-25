@@ -1,0 +1,1 @@
+<Javascript name="JS-ValidateArmorResponse" timeLimit="200"><Properties><Property name="phase">response</Property><Property name="requiredFilters">rai,sdp,pi_and_jailbreak,malicious_uris</Property></Properties><ResourceURL>jsc://validate-armor.js</ResourceURL></Javascript>

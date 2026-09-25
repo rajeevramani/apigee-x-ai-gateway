@@ -1,0 +1,6 @@
+<AssignMessage name="AM-PrepareTargetRequest">
+  <Remove><Headers><Header name="Authorization"/><Header name="x-api-key"/></Headers></Remove>
+  <AssignVariable><Name>target.copy.pathsuffix</Name><Value>false</Value></AssignVariable>
+  <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+  <AssignTo createNew="false" transport="http" type="request"/>
+</AssignMessage>

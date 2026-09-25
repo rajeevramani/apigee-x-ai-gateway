@@ -1,0 +1,9 @@
+<SemanticCachePopulate name="SCP-PopulateFAQ" continueOnError="false" enabled="true">
+  <IgnoreUnresolvedVariables>false</IgnoreUnresolvedVariables>
+  <SimilaritySearch>
+    <VertexAI>
+      <URL>__UPSERT_URL__</URL>
+    </VertexAI>
+  </SimilaritySearch>
+  <TTLInSeconds>__TTL_SECONDS__</TTLInSeconds>
+</SemanticCachePopulate>

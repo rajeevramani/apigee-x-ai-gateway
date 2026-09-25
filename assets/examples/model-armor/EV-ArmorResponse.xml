@@ -1,0 +1,8 @@
+<ExtractVariables name="EV-ArmorResponse" continueOnError="false" enabled="true">
+  <Source clearPayload="false">response</Source>
+  <JSONPayload>
+    <Variable name="response" type="string"><JSONPath>$.choices[0].message.content</JSONPath></Variable>
+  </JSONPayload>
+  <VariablePrefix>private.armor</VariablePrefix>
+  <IgnoreUnresolvedVariables>false</IgnoreUnresolvedVariables>
+</ExtractVariables>

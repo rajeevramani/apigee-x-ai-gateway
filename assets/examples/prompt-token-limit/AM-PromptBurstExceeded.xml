@@ -1,0 +1,9 @@
+<AssignMessage name="AM-PromptBurstExceeded" continueOnError="false" enabled="true">
+  <Set>
+    <Payload contentType="application/json">{"error":"prompt_token_rate_exceeded"}</Payload>
+    <StatusCode>429</StatusCode>
+    <ReasonPhrase>Too Many Requests</ReasonPhrase>
+  </Set>
+  <IgnoreUnresolvedVariables>false</IgnoreUnresolvedVariables>
+  <AssignTo createNew="false" transport="http" type="response"/>
+</AssignMessage>

@@ -1,0 +1,4 @@
+<FaultRule name="local-cost-budget-exhausted">
+  <Step><Name>AM-CostBudgetExceeded</Name></Step>
+  <Condition>(fault.name = "LLMTokenQuotaViolation") and (ratelimit.LTQ-CostEnforce.failed = true)</Condition>
+</FaultRule>

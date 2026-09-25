@@ -1,0 +1,12 @@
+<LLMTokenQuota name="LTQ-Enforce">
+  <SharedName>__COUNTER_NAME__</SharedName>
+  <EnforceOnly>true</EnforceOnly>
+  <Allow count="1" countRef="verifyapikey.__VERIFY_API_KEY_POLICY__.apiproduct.developer.llmQuota.limit"/>
+  <Interval ref="verifyapikey.__VERIFY_API_KEY_POLICY__.apiproduct.developer.llmQuota.interval">1</Interval>
+  <TimeUnit ref="verifyapikey.__VERIFY_API_KEY_POLICY__.apiproduct.developer.llmQuota.timeunit">minute</TimeUnit>
+  <Identifier ref="__VERIFIED_CALLER_VARIABLE__"/>
+  <Distributed>true</Distributed>
+  <Synchronous>__SYNCHRONOUS__</Synchronous>
+  <IgnoreUnresolvedVariables>false</IgnoreUnresolvedVariables>
+  <LLMModelSource>{__UPSTREAM_MODEL_VARIABLE__}</LLMModelSource>
+</LLMTokenQuota>

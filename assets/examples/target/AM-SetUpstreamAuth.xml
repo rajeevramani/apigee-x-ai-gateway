@@ -1,0 +1,5 @@
+<AssignMessage name="AM-SetUpstreamAuth">
+  <Set><Headers><Header name="Authorization">Bearer {private.upstream_api_key}</Header></Headers></Set>
+  <IgnoreUnresolvedVariables>false</IgnoreUnresolvedVariables>
+  <AssignTo createNew="false" transport="http" type="request"/>
+</AssignMessage>

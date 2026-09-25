@@ -1,0 +1,10 @@
+<AssignMessage name="AM-QuotaExceeded">
+  <Set>
+    <Headers><Header name="Content-Type">application/json</Header></Headers>
+    <Payload contentType="application/json">{"error":{"code":"token_quota_exceeded","message":"Token quota exhausted."}}</Payload>
+    <StatusCode>429</StatusCode>
+    <ReasonPhrase>Too Many Requests</ReasonPhrase>
+  </Set>
+  <IgnoreUnresolvedVariables>false</IgnoreUnresolvedVariables>
+  <AssignTo createNew="false" type="response"/>
+</AssignMessage>

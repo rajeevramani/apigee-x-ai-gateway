@@ -1,0 +1,10 @@
+<RaiseFault name="RF-ArmorIncomplete" continueOnError="false" enabled="true">
+  <FaultResponse>
+    <Set>
+      <Payload contentType="application/json">{"error":"inspection_incomplete"}</Payload>
+      <StatusCode>__INCOMPLETE_STATUS__</StatusCode>
+      <ReasonPhrase>Inspection incomplete</ReasonPhrase>
+    </Set>
+  </FaultResponse>
+  <IgnoreUnresolvedVariables>false</IgnoreUnresolvedVariables>
+</RaiseFault>

@@ -1,0 +1,27 @@
+<!-- Merge guide: inspect prompts and responses; count usage before response inspection. -->
+<PreFlow name="PreFlow">
+  <Request>
+    <Step><Name>__CALLER_AUTH_POLICY__</Name></Step>
+    <Step><Name>__REQUEST_VALIDATION_POLICY__</Name></Step>
+    <Step><Name>LTQ-Enforce</Name></Step>
+    <Step><Name>EV-ArmorPrompt</Name></Step>
+    <Step><Name>SUP-InspectPrompt</Name></Step>
+    <Step><Name>JS-ValidateArmorPrompt</Name></Step>
+    <Step>
+      <Name>RF-ArmorIncomplete</Name>
+      <Condition>(private.armor.prompt_complete != true)</Condition>
+    </Step>
+  </Request>
+  <Response>
+    <Step><Name>LTQ-Count</Name><Condition>__APPROVED_COUNT_CONDITION__</Condition></Step>
+    <Step><Name>__RESPONSE_VALIDATION_POLICY__</Name><Condition>response.status.code = 200</Condition></Step>
+    <Step><Name>EV-ArmorResponse</Name><Condition>response.status.code = 200</Condition></Step>
+    <Step><Name>SMR-InspectResponse</Name><Condition>response.status.code = 200</Condition></Step>
+    <Step><Name>JS-ValidateArmorResponse</Name><Condition>response.status.code = 200</Condition></Step>
+    <Step>
+      <Name>RF-ArmorIncomplete</Name>
+      <Condition>(response.status.code = 200) and (private.armor.response_complete != true)</Condition>
+    </Step>
+    <Step><Name>__RESPONSE_PRIVACY_POLICY__</Name></Step>
+  </Response>
+</PreFlow>

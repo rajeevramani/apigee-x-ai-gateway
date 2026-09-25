@@ -1,0 +1,14 @@
+# Local and sensitive state
+.DS_Store
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+credentials*.json
+application_default_credentials.json
+private/
+evidence/
+__pycache__/
+.venv/
+lab-config.md

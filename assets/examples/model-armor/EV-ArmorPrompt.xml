@@ -1,0 +1,8 @@
+<ExtractVariables name="EV-ArmorPrompt" continueOnError="false" enabled="true">
+  <Source clearPayload="false">request</Source>
+  <JSONPayload>
+    <Variable name="prompt" type="string"><JSONPath>$.messages[0].content</JSONPath></Variable>
+  </JSONPayload>
+  <VariablePrefix>private.armor</VariablePrefix>
+  <IgnoreUnresolvedVariables>false</IgnoreUnresolvedVariables>
+</ExtractVariables>

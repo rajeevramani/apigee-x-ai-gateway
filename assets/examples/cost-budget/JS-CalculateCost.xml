@@ -1,0 +1,7 @@
+<Javascript name="JS-CalculateCost" timeLimit="200" continueOnError="false" enabled="true">
+  <Properties>
+    <Property name="verifyApiKeyPolicy">__VERIFY_API_KEY_POLICY__</Property>
+    <Property name="modelAliasVariable">__MODEL_ALIAS_VARIABLE__</Property>
+  </Properties>
+  <ResourceURL>jsc://calculate-cost.js</ResourceURL>
+</Javascript>

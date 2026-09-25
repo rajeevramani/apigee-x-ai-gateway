@@ -1,0 +1,13 @@
+<LLMTokenQuota name="LTQ-CostCount">
+  <SharedName>__COST_COUNTER_NAME__</SharedName>
+  <CountOnly>true</CountOnly>
+  <Allow count="1" countRef="verifyapikey.__VERIFY_API_KEY_POLICY__.apiproduct.cost_budget_microusd"/>
+  <Interval ref="verifyapikey.__VERIFY_API_KEY_POLICY__.apiproduct.cost_budget_interval">1</Interval>
+  <TimeUnit ref="verifyapikey.__VERIFY_API_KEY_POLICY__.apiproduct.cost_budget_timeunit">month</TimeUnit>
+  <Identifier ref="__VERIFIED_CALLER_VARIABLE__"/>
+  <Distributed>true</Distributed>
+  <Synchronous>__SYNCHRONOUS__</Synchronous>
+  <IgnoreUnresolvedVariables>false</IgnoreUnresolvedVariables>
+  <LLMTokenUsageSource>{cost.microusd}</LLMTokenUsageSource>
+  <LLMModelSource>{__UPSTREAM_MODEL_VARIABLE__}</LLMModelSource>
+</LLMTokenQuota>
