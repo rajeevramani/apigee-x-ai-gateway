@@ -27,6 +27,8 @@ For Apigee X, the project ID is also the organization ID. This example uses one 
 
 ## Vertex alternative — replace the external backend and KVM lines
 
+For a complete routing-only configuration with explicit request handling, product/app choices and operator boundaries, copy [the Vertex Lab 1 example](lab-config.vertex.example.md).
+
 ```text
 Backend type: vertex-openai
 Vertex project ID: __VERTEX_PROJECT_ID__
