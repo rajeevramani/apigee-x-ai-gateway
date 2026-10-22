@@ -11,6 +11,7 @@ Proxy: __PROXY_NAME__
 Base path: __BASE_PATH__
 Operation: POST /chat/completions
 
+Backend type: external-kvm
 Backend: __FULL_BACKEND_CHAT_COMPLETIONS_URL__
 Models:
   __CALLER_ALIAS_1__ → __EXACT_BACKEND_MODEL_ID_1__
@@ -22,7 +23,22 @@ KVM name: __EXISTING_KVM_NAME__
 KVM entry: __EXACT_EXISTING_ENTRY_NAME__
 ```
 
-For Apigee X, the project ID is also the organization ID. This example uses one OpenAI-compatible backend and a KVM-backed Bearer credential; adapt those lines if your approved backend differs. Copy existing KVM map and entry names exactly. If they do not exist, say “setup needed” rather than inventing an existing resource.
+For Apigee X, the project ID is also the organization ID. This example uses one OpenAI-compatible backend and a KVM-backed Bearer credential; for Vertex, replace the backend/authentication/KVM lines using the block below. Copy existing KVM map and entry names exactly. If they do not exist, say “setup needed” rather than inventing an existing resource.
+
+## Vertex alternative — replace the external backend and KVM lines
+
+```text
+Backend type: vertex-openai
+Vertex project ID: __VERTEX_PROJECT_ID__
+Vertex location: __APPROVED_VERTEX_LOCATION_OR_GLOBAL__
+Deployment service account: __SERVICE_ACCOUNT_EMAIL__
+Backend authentication: native GoogleAccessToken
+Models:
+  __CALLER_ALIAS_1__ → google/__EXACT_MODEL_ID_1__
+  __CALLER_ALIAS_2__ → google/__EXACT_MODEL_ID_2__
+```
+
+Keep the core Apigee settings and caller `x-api-key` authentication. Derive the full target URL from the approved Vertex project/location. No backend key or KVM is required. Complete [Vertex setup](references/vertex-target.md) before deployment. Reuse this deployment account for Model Armor, adding its required grants; if repeating the deployment-account field below, use the same value.
 
 ## Optional settings — add when needed
 

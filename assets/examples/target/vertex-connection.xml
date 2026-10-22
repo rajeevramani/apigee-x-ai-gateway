@@ -1,0 +1,8 @@
+<HTTPTargetConnection>
+  <Authentication>
+    <GoogleAccessToken>
+      <Scopes><Scope>https://www.googleapis.com/auth/cloud-platform</Scope></Scopes>
+    </GoogleAccessToken>
+  </Authentication>
+  <URL>__VERTEX_CHAT_COMPLETIONS_URL__</URL>
+</HTTPTargetConnection>

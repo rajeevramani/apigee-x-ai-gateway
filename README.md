@@ -5,7 +5,7 @@ Turn your Apigee X environment into an **AI gateway** for LLM traffic. An AI cod
 Your first goal is one endpoint that:
 
 - routes callers to different models by a simple alias (`"model": "fast"` → the real backend model)
-- keeps your backend API key in Apigee, so callers only ever use their own Apigee key
+- keeps backend authentication in Apigee: a stored API key or keyless Vertex AI access, while callers use their own Apigee key
 
 Then add controls one lab at a time: token quotas, spending budgets and Model Armor inspection.
 
@@ -34,7 +34,7 @@ Then add controls one lab at a time: token quotas, spending budgets and Model Ar
 
 - [ ] An **Apigee X org with a test environment**. An [evaluation org](https://docs.cloud.google.com/apigee/docs/api-platform/get-started/eval-orgs) works. The org itself is free, but model calls and later labs' services (Model Armor, Vertex AI) are billed separately.
 - [ ] `gcloud`, signed in with rights to import and deploy proxies. Later steps also need rights to create KVM entries, API products and apps, and in Lab 4, Model Armor resources and IAM grants. Deploy rights alone may not cover these.
-- [ ] An **OpenAI-compatible chat completions endpoint** (non-streaming), its API key, and **two model IDs** it serves
+- [ ] An **OpenAI-compatible chat completions backend** (non-streaming): either an external endpoint/API key or [Vertex AI Gemini](references/vertex-target.md), with **two approved model IDs**
 - [ ] Any AI coding agent that supports skills (a folder with a `SKILL.md` plus supporting files) and can read and write local files
 - [ ] A basic idea of [API products](https://docs.cloud.google.com/apigee/docs/api-platform/publish/what-api-product): they control which apps can call your proxy, and later hold your quota limits
 
@@ -63,9 +63,12 @@ cp -R /tmp/cabral-skills/skills/apigee-x-proxy-development "$SKILLS/"
 
 Keep each skill's `SKILL.md`, `references/` and `assets/` together. Start a **new** agent session so it picks up the skills. Optional: run [Lab 0](labs/lab-0-readiness.md) to check the agent found both skills before you build anything.
 
-### 2. Store your backend key in Apigee
+<a id="2-store-your-backend-key-in-apigee"></a>
+### 2. Prepare backend authentication
 
-Put the backend API key in an **encrypted environment KVM** and note the map and entry names exactly. If you don't have one yet, ask the agent in step 3 and it will give you the commands.
+**External backend:** put the backend API key in an **encrypted environment KVM** and note the map and entry names exactly. If you don't have one yet, ask the agent in step 3 and it will give you the commands.
+
+**Vertex AI:** follow [Vertex target setup](references/vertex-target.md#operator-setup-before-the-zip) to enable `aiplatform.googleapis.com`, create or reuse a proxy service account, and grant runtime/deployment access. No backend API key or KVM is needed. Choose an approved location and two Gemini model IDs. You run the setup commands; model calls are billed.
 
 ### 3. Ask the agent to build it
 
@@ -87,7 +90,7 @@ I will do all cloud setup, deployment and testing myself. Don't access
 my cloud account and never ask me to paste secrets.
 ```
 
-The agent will ask for your project ID, environment, backend URL, the exact model IDs and your KVM names. Prefer to fill these in up front? Copy [`lab-config.example.md`](lab-config.example.md) and give the agent its path.
+The agent will ask for your project ID, environment, backend URL, the exact model IDs and either your KVM names or Vertex project/location and deployment service account. Prefer to fill these in up front? Copy [`lab-config.example.md`](lab-config.example.md) and give the agent its path.
 
 **You get:** proxy source, an importable ZIP, API product and app setup steps, and a short test plan.
 
@@ -109,6 +112,8 @@ curl -s -X POST \
 gcloud apigee apis deploy REVISION --api=$PROXY --environment=$ENV --organization=$ORG
 ```
 
+**For Vertex, select the proxy service account during deployment.** Use the UI or the identity-aware commands in the generated handoff, not the generic deployment command above. Verify the deployed revision uses that account.
+
 Use the commands generated for your configuration. **Stop if they conflict with what you agreed** (names, paths, environment) and ask the agent why.
 
 ### 5. Smoke test
@@ -118,7 +123,7 @@ Fill these in from your environment and the agent's handoff:
 ```bash
 HOST=your-env-group-hostname   BASE=/ai-gateway   KEY=your-app-api-key
 
-call() { curl -s -w '\nHTTP %{http_code}\n' "https://$HOST$BASE/ai-gateway/chat/completions" \
+call() { curl -s -w '\nHTTP %{http_code}\n' "https://$HOST$BASE/chat/completions" \
   -H "Content-Type: application/json" -H "x-api-key: $1" \
   -d "{\"model\":\"$2\",\"messages\":[{\"role\":\"user\",\"content\":\"hello\"}],\"max_tokens\":20}"; }
 
@@ -128,7 +133,7 @@ call "$KEY" gpt-9000    # expect: an error for the unknown alias, not a fallback
 call "bad-key" fast     # expect: a caller-authentication error
 ```
 
-Exact status codes and error bodies follow the contract you agreed with the agent.
+For Vertex, use the generated test payload with an agreed reasoning-inclusive output allowance (for example 256), rather than the generic 20-token example. Check `finish_reason`; `length` means truncated output. Exact status codes and error bodies follow the contract you agreed with the agent.
 
 **All four behave as expected? Your smoke tests pass.** These are quick checks. For example, a response's `model` field hints at routing but doesn't confirm it. The [routing acceptance cases](references/model-routing.md#acceptance-cases) cover the full checks. Keep the `lab-1` folder, because the next lab builds on it.
 
@@ -289,7 +294,8 @@ Add the template's full `name` and the service-account email to your private con
 | Symptom | Likely cause |
 |---|---|
 | Backend `404` | Path is duplicated in the target URL. Ask the agent to check the TargetEndpoint path. |
-| Backend `401/403` | The KVM map or entry name is wrong, or the key isn't populated. Caller auth is separate. |
+| Vertex API/authentication error | Check API enablement, the revision’s attached service account and Vertex IAM. A model-policy denial needs an approved model, not more IAM; see [Vertex setup](references/vertex-target.md). |
+| External backend `401/403` | The KVM map or entry name is wrong, or the key isn't populated. Caller auth is separate. |
 | Caller auth fails with a valid key | The app's API product doesn't include this proxy or environment. |
 | Quota never triggers | You edited a different product than the app uses, or the product cache hasn't refreshed yet (wait a few minutes). |
 

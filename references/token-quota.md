@@ -1,5 +1,7 @@
 # Token quota — incremental workflow
 
+For Vertex AI, follow [usage and acceptance](vertex-target.md#usage-and-bounded-acceptance): count `usage.total_tokens`, including reasoning, and retain exact `google/<MODEL_ID>` product identities.
+
 ## Scope and source
 
 Use native LLMTokenQuota, not request-count Quota, to limit accumulated token usage on an existing non-streaming OpenAI-compatible gateway. See [evidence status](capability-status.md).

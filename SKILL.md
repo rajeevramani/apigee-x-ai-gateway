@@ -23,6 +23,7 @@ version: 1.0.0
 
 | Capability | Reference | Output |
 |---|---|---|
+| Vertex AI chat target | [Vertex target](references/vertex-target.md) | OpenAI-compatible Gemini endpoint, native Google auth, operator API/IAM setup |
 | Routing | [Routing](references/model-routing.md) | Alias, endpoint and auth mapping; bundle; route checks |
 | Accumulated tokens | [LLMTokenQuota](references/token-quota.md) | Product-sourced limit, counter scope, paired policies, counter tests |
 | API keys and product configuration | [API product setup](references/api-product-setup.md) | Operator-run product, developer, app and attribute steps with readback |
@@ -48,7 +49,7 @@ version: 1.0.0
 
 ## Procedure
 
-1. **Discover.** Read supplied configuration, then ask about all gaps at once, each with a recommendation. Confirm organization, environment, proxy name, base path, endpoints, models, formats, caller and backend authentication, streaming and test budget. Agree aliases and unknown-model errors; recommend explicit rejection, never implicit fallback. Keep existing identifiers.
+1. **Discover.** Read supplied configuration, then ask about all gaps at once, each with a recommendation. Confirm organization, environment, proxy name, base path, endpoints, models, formats, caller and backend authentication, streaming and test budget. Select external/KVM or Vertex AI explicitly; for Vertex read [Vertex target](references/vertex-target.md) before generating setup or target files. Agree aliases and unknown-model errors; recommend explicit rejection, never implicit fallback. Keep existing identifiers.
 2. **Approve and baseline.** Confirm the project, ownership, changes, exposure and call limits. Get separate approval for reads, backend calls, setup and IAM, deployment, retained costs and trials. Probe approved backends with a small synthetic call and record the status, resolved model and usage. Resolve authentication failures with the user; never retry blindly.
 3. **Build incrementally.**
    - Keep working proxies and operator changes. Write real files, native policies first.
@@ -57,7 +58,7 @@ version: 1.0.0
    - On every route, remove caller credential headers before inserting the backend credential.
    - Mark any file written without its reference as unverified and ask.
    - Check policies, attachment order, XML, references and ZIP structure.
-4. **Import and deploy as approved.** Get separate approval for runtime credentials. Before the ZIP, supply the [Model Armor](references/model-armor-setup.md#manual-pre-import-handoff) and [semantic cache](references/semantic-cache.md#manual-pre-import-handoff) handoffs that apply. Never run manual instructions yourself. Deploy only approved revisions, and read back configuration and readiness after each write.
+4. **Import and deploy as approved.** Get separate approval for runtime credentials. Before the ZIP, supply the [Vertex target](references/vertex-target.md#operator-setup-before-the-zip), [Model Armor](references/model-armor-setup.md#manual-pre-import-handoff) and [semantic cache](references/semantic-cache.md#manual-pre-import-handoff) handoffs that apply. Never run manual instructions yourself. Deploy only approved revisions, and read back configuration and readiness after each write.
 5. **Verify and hand off.**
    - With every API-key proxy, deliver [API product setup](references/api-product-setup.md#generated-proxy-handoff) instructions for the generated proxy. For token quotas, list the product's LLM operation model names and explain that they are backend model IDs, not caller aliases.
    - Run the acceptance cases on the deployed proxy. Report structural checks, direct-backend results and deployed-proxy results separately.

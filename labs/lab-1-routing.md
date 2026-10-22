@@ -7,7 +7,7 @@ The [Quickstart](../README.md#quickstart-your-first-routed-call) walks through t
 ## Before you start
 
 - An Apigee X test environment and an approved **non-streaming, OpenAI-compatible** chat completions backend with two exact model IDs.
-- The backend key in an **encrypted environment KVM**, or ask the agent for setup steps. Copy the KVM map and entry names exactly, including case. If one doesn't exist yet, tell the agent "setup needed".
+- For Vertex, complete [Vertex setup](../references/vertex-target.md); use native Google authentication and no backend KVM. For an external backend, put the key in an **encrypted environment KVM**, or ask the agent for setup steps. Copy the KVM map and entry names exactly, including case. If one doesn't exist yet, tell the agent "setup needed".
 - Two terms the agent will use:
   - **Model alias:** the `model` value callers send, such as `fast`.
   - **Backend model ID:** the exact upstream model ID it maps to. Callers can only choose aliases, never arbitrary URLs or credentials.
@@ -30,8 +30,8 @@ Use the [Quickstart prompt](../README.md#3-ask-the-agent-to-build-it). You don't
 1. **Review the bundle.** Check that:
    - `apiproxy/` is at the ZIP root
    - no placeholders or secrets are left
-   - the backend key is read from the KVM at runtime, not stored in the bundle
-2. **Set up.** Store the backend key and create the API product and app, using the agent's steps.
+   - external keys are read from the KVM at runtime; Vertex uses native `GoogleAccessToken` with no static key
+2. **Set up.** Complete external key storage or Vertex API/IAM setup, then create the API product and app using the agent's steps. For Vertex, select the supplied service account when deploying and read it back.
 3. **Import and deploy** the exact revision ([Quickstart step 4](../README.md#4-deploy)), then confirm the deployment is ready.
 
 ## Smoke test
@@ -51,7 +51,8 @@ The [routing acceptance cases](../references/model-routing.md#acceptance-cases) 
 | Symptom | Likely cause |
 |---|---|
 | Backend `404` | Path is duplicated in the target URL. Check the TargetEndpoint's effective URL. |
-| Backend `401/403` | Wrong KVM map or entry name, key not populated, or credential inserted in the wrong order. Don't paste the key into chat. |
+| Vertex API/authentication error | Check API enablement, attached deployment identity and IAM; inspect `vertexai.allowedModels` for a model-policy denial. See [Vertex setup](../references/vertex-target.md). |
+| External backend `401/403` | Wrong KVM map or entry name, key not populated, or credential inserted in the wrong order. Don't paste the key into chat. |
 | `200`, but you can't tell which model answered | Routing isn't verified yet. See the [routing workflow](../references/model-routing.md). |
 
 **Next:** [Lab 2 — Add a token quota](lab-2-token-quota.md)

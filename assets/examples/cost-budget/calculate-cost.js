@@ -2,6 +2,7 @@
 // Prices come from API product custom attributes, in USD per 1 million tokens.
 // USD per 1 million tokens is numerically the same as micro-USD per token.
 // Sets cost.microusd (whole number, rounded up) and cost.valid ("true"/"false").
+// usageMode: completion (default), or vertex-total-minus-prompt for text-only Vertex.
 // ECMAScript 5.1 only: no let/const, arrow functions or template literals.
 
 function isTokenCount(n) {
@@ -29,6 +30,18 @@ try {
   var usage = body && body.usage;
   var promptTokens = usage ? usage.prompt_tokens : null;
   var completionTokens = usage ? usage.completion_tokens : null;
+  var usageMode = properties.usageMode || 'completion';
+  if (usageMode === 'vertex-total-minus-prompt') {
+    var totalTokens = usage ? usage.total_tokens : null;
+    if (!isTokenCount(totalTokens) || !isTokenCount(promptTokens) ||
+        !isTokenCount(completionTokens) || totalTokens < promptTokens + completionTokens) {
+      throw new Error('Invalid Vertex usage');
+    }
+    // Total includes reasoning; do not add reasoning_tokens a second time.
+    completionTokens = totalTokens - promptTokens;
+  } else if (usageMode !== 'completion') {
+    throw new Error('Unknown usage mode');
+  }
 
   if (priceIn !== null && priceOut !== null &&
       isTokenCount(promptTokens) && isTokenCount(completionTokens)) {
