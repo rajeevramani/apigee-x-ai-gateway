@@ -23,6 +23,10 @@ Before writing any file, ask every question below that the user or existing conf
 
 If an answer is still missing when you build, leave the matching `__PLACEHOLDER__` visible and say plainly in the handoff that the bundle is **not ready to import**.
 
+## Vertex usage selection
+
+For a [Vertex text-only target](vertex-target.md#usage-and-bounded-acceptance), add `<Property name="usageMode">vertex-total-minus-prompt</Property>` to `JS-CalculateCost`. This counts output as `usage.total_tokens - usage.prompt_tokens`, including reasoning without double counting. The script rejects missing, negative, fractional or inconsistent counts through `cost.valid=false`; apply the agreed missing-cost handling. Verify the usage mapping with each selected model before claiming budget acceptance. Default/`completion` mode retains the external backend calculation below. Synthetic prices demonstrate enforcement, not actual billing; multimodal pricing and cached-token discounts are not covered.
+
 ## How it works
 
 1. **Request:** VerifyAPIKey verifies the caller and exposes the API Product's custom attributes. A guard rejects the call if the budget attributes are missing. `LTQ-CostEnforce` checks whether this caller's spending so far is already over budget.

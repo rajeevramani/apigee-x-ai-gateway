@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+- Add Vertex AI OpenAI-compatible Gemini target guidance, native Google authentication and operator-run API/IAM setup. Preserve external/KVM routing.
+- Add explicit reasoning-inclusive Vertex cost accounting and offline regression checks.
+- Correct the quickstart smoke URL to avoid duplicating the configured base path.
+
 ## 1.0.0 — First public release
 
 - Agent skill for building AI gateways on Apigee X, with references and example policies for:

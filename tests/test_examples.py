@@ -12,6 +12,7 @@ ASSETS = ROOT / 'assets/examples'
 # Explicit example coverage: never derive expected results from discovered
 # markers or XML files. Three additional assets are intentionally linked-only.
 EXPECTED_EXAMPLES = {
+    'assets/examples/target/vertex-connection.xml',
     'assets/examples/target/AM-PrepareTargetRequest.xml',
     'assets/examples/target/target-request-flow.xml',
     'assets/examples/token-quota/LTQ-Enforce.xml',

@@ -23,6 +23,7 @@ Save each step's work in its own directory under ./ai-gateway.
 
 - The agent reads both `SKILL.md` files and the [feature status](../references/capability-status.md), and reports gateway skill version `1.0.0`.
 - It lists routing, token quotas, spending budgets, Model Armor, burst protection and semantic caching, and says streaming and format conversion aren't supported.
+- It distinguishes external/KVM from [Vertex AI](../references/vertex-target.md), including operator-run API enablement and deployment identity.
 - It asks for missing details (environment, backend, authentication) without inventing values, and agrees where it will save files.
 - It doesn't run cloud commands or generate a proxy yet.
 

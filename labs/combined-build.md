@@ -57,6 +57,8 @@ I will perform all cloud setup, import, deployment and live testing.
 Do not access my cloud account, make live calls or include secrets.
 ```
 
+For Vertex, replace the backend/authentication/KVM lines with the Vertex alternative in [configuration](../lab-config.example.md) and complete [Vertex setup](../references/vertex-target.md). Use one deployment account with both Vertex and Armor permissions.
+
 The same settings live in [`lab-config.example.md`](../lab-config.example.md) if you'd rather keep them in a file.
 
 ## Deploy and test

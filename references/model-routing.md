@@ -19,7 +19,7 @@ Read the available context first. Ask only the questions it leaves open, and exp
 
 Keep a private table that maps each alias to its endpoint, upstream model, API format, auth scheme and secret reference. Resolve only configured destinations, and reject caller-controlled target URLs or credential references. Compare identifiers exactly, without normalization or repair.
 
-Start with non-streaming OpenAI-compatible chat completions, and verify the backend's request and response fields. Anthropic conversion, streaming and fallback are separate increments. Direct provider integrations (provider-specific auth and formats) are separate increments.
+Start with non-streaming OpenAI-compatible chat completions, and verify the backend's request and response fields. Anthropic conversion, streaming and fallback are separate increments. Vertex AI Gemini is an explicit backend option: follow [Vertex target](vertex-target.md) for native Google authentication, setup and usage accounting. Other provider-specific integrations are separate increments.
 
 Agree the client contract: a POST to the approved path with a JSON object holding a string model alias and a messages array. A missing or unsupported model, or an unsupported streaming request, returns a sanitized 400. If a contract already exists, document and test that one.
 
@@ -78,6 +78,8 @@ response flow.
 ## Target request preparation
 
 Files: [preparation](../assets/examples/target/AM-PrepareTargetRequest.xml), [upstream authentication](../assets/examples/target/AM-SetUpstreamAuth.xml), [flow fragment](../assets/examples/target/target-request-flow.xml).
+
+**External/KVM path:** the lookup and Bearer insertion below apply only to this path. For Vertex, use [native authentication](vertex-target.md#target-composition), retaining only preparation/header removal from these Steps.
 
 Copy the policies into the bundle's policies directory. Merge the request Steps into the existing TargetEndpoint request PreFlow, and keep the existing endpoint and response Steps. Authenticate callers before header removal. Replace `__CREDENTIAL_LOOKUP_POLICY__` with the approved lookup policy, which must set `private.upstream_api_key`, and handle a missing or empty credential before auth insertion. Never render secrets into assets or bundles.
 
