@@ -33,7 +33,7 @@ Use the [target request preparation](#target-request-preparation) below and insp
 4. Apply [target preparation](#target-request-preparation) on every route. Read back the policy and its attached TargetEndpoint Step, including conditions and any later overwrite or removal.
 5. Select an approved, documented runtime credential mechanism, with its permissions and masking. Obtain [approval](../SKILL.md#procedure) before any KVM, secret or IAM write, and follow the [privacy gates](../SKILL.md#shared-gates). Files in the agent's container are not visible to the Apigee runtime.
 6. Preserve the agreed response fields and any usage data. Strip internal routing metadata, and sanitize both successes and errors. Keep prompt and response logging off by default.
-7. Complete the [local checks](#completion-checks). Then obtain deployment approval, import and read back the exact revision, and deploy without overriding existing deployments. Verify readiness before running approved probes.
+7. Complete the [local checks](#completion-checks). Then obtain deployment approval, import and read back the exact revision, and follow [revision replacement](#replacing-a-deployed-revision) if this proxy already has a deployed revision. Never replace an unrelated deployment. Verify readiness before running approved probes.
 
 Use the pinned skill's [bundle layout](https://github.com/carlosmscabral/cabral-skills/blob/f1171671874444b42d5a6d7a0e4ac63e80db2fe8/skills/apigee-x-proxy-development/references/proxy_bundle_anatomy.md#directory-tree), [Step configuration](https://github.com/carlosmscabral/cabral-skills/blob/f1171671874444b42d5a6d7a0e4ac63e80db2fe8/skills/apigee-x-proxy-development/references/flows_and_execution.md#step-configuration) and [message templates](https://github.com/carlosmscabral/cabral-skills/blob/f1171671874444b42d5a6d7a0e4ac63e80db2fe8/skills/apigee-x-proxy-development/references/flow_variables_and_conditions.md#message-templates) for syntax, within the [dependency boundary](dependency-map.md#capability-ownership-and-precise-dependency-references). Merge the examples below into working flows; [feature status](capability-status.md) lists what has been tested.
 
@@ -116,6 +116,37 @@ Example source: `../assets/examples/target/target-request-flow.xml`
   <Response/>
 </PreFlow>
 ```
+
+## Replacing a deployed revision
+
+Progressive Labs 2–4 replace the previous revision of the same proxy. Include this sequence in every generated deployment handoff. A plain deploy defaults to `override=false` and fails with `CONFLICTING_DEPLOYMENT` if another revision is deployed.
+
+1. Have the operator list deployments. Record the current revision and service account in the selected environment.
+2. Identify the newly imported revision separately. Explain exactly which revision will be replaced and obtain operator approval.
+3. Deploy the new revision with `override=true`. Include the approved `serviceAccount` for Vertex or Model Armor. Do not assume the prior identity is inherited.
+4. Read deployments again. Wait for the new revision to be READY with the intended account before testing. On failure, inspect actual state before retrying; do not assume replacement completed.
+
+Do not require a separate undeploy for normal revision replacement. Apigee supports zero-downtime replacement; undeploying first creates an avoidable service gap. If the operator explicitly chooses undeploy-first, explain the gap and give exact-revision undeploy/readback steps before deployment. Never undeploy an unrelated proxy or silently override an unexpected revision.
+
+Generate filled-in values for `ORG`, `ENV`, `PROXY`, `REV` (new revision) and `SA` from the approved configuration. This Bash example assumes a Google-authenticated target; omit `serviceAccount` only when no deployment identity is required. The helper keeps the token out of curl arguments. Never enable shell tracing or verbose HTTP output.
+
+```bash
+auth() { printf 'Authorization: Bearer %s\n' "$(gcloud auth print-access-token)"; }
+
+# Read current deployments; inspect the selected environment.
+curl --fail-with-body -sS -H @<(auth) \
+  "https://apigee.googleapis.com/v1/organizations/${ORG}/apis/${PROXY}/deployments"
+
+# Operator-approved replacement of the current revision.
+curl --fail-with-body -sS -X POST -H @<(auth) \
+  "https://apigee.googleapis.com/v1/organizations/${ORG}/environments/${ENV}/apis/${PROXY}/revisions/${REV}/deployments?override=true&serviceAccount=${SA}"
+
+# Read back revision, environment, service account and deployment state.
+curl --fail-with-body -sS -H @<(auth) \
+  "https://apigee.googleapis.com/v1/organizations/${ORG}/apis/${PROXY}/deployments"
+```
+
+Use the installed CLI's help for equivalent CLI flags. The agent supplies these commands; the operator runs them. Source: [Apigee deploy API](https://cloud.google.com/apigee/docs/reference/apis/apigee/rest/v1/organizations.environments.apis.revisions.deployments/deploy).
 
 ## Completion checks
 

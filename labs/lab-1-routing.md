@@ -23,7 +23,7 @@ Use the [Quickstart prompt](../README.md#3-ask-the-agent-to-build-it). You don't
 - The agreed alias → model mapping, and what happens for a missing or unknown alias (rejected, never a silent fallback)
 - Proxy source, an importable ZIP and local check results
 - Setup steps for the API product and developer app that give you a caller key ([API product setup](../references/api-product-setup.md))
-- A short test plan
+- Copyable, configuration-specific curl tests following the skill’s operator-run handoff requirements: both aliases succeed; missing/unknown alias, streaming and invalid caller key are rejected.
 
 ## Deploy
 

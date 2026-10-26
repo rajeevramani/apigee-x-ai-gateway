@@ -19,7 +19,8 @@ Inspect prompts and responses with Model Armor. The gateway blocks matches and i
 Protect the gateway's prompts and responses with Model Armor.
 
 Save a new source bundle and ZIP in ./ai-gateway/lab-4, with
-deployment steps and a small test plan.
+deployment steps and copyable, configuration-specific curl test commands.
+Follow the skill’s operator-run test handoff requirements. Cover benign passage, synthetic prompt blocking, controlled response blocking matched to enabled filters, and earlier-lab regression checks; report inconclusive Armor cases as unverified.
 ```
 
 ## What you get
@@ -32,6 +33,8 @@ deployment steps and a small test plan.
 The gateway blocks matches. It doesn't redact or rewrite text.
 
 ## Deploy
+
+This replaces the previous lab’s revision. Follow [revision replacement](../references/model-routing.md#replacing-a-deployed-revision): inspect the current deployment, approve the replacement, deploy with `override=true` and the required service account, then verify READY. A separate undeploy is not required.
 
 1. **Review the diff** against the [Model Armor workflow](../references/model-armor.md).
 2. **Import, then select the deployment service account** for the new revision. Importing the ZIP doesn't attach it, and it isn't inherited from the previous revision.
