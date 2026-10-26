@@ -13,7 +13,8 @@ Limit how many tokens each caller can use per time window, without changing rout
 Add a limit of 100 tokens per caller to the Lab 1 gateway.
 
 Save a new source bundle and ZIP in ./ai-gateway/lab-2, with
-deployment steps and a small test plan.
+deployment steps and copyable, configuration-specific curl test commands.
+Follow the skill’s operator-run test handoff requirements. Cover success, bounded quota exhaustion, quota rejection and success after reset.
 ```
 
 ## What you get
@@ -29,6 +30,8 @@ deployment steps and a small test plan.
 Tokens are counted after each call, so a caller can overshoot slightly. This is **not a hard spend ceiling**.
 
 ## Deploy
+
+This replaces the previous lab’s revision. Follow [revision replacement](../references/model-routing.md#replacing-a-deployed-revision): inspect the current deployment, approve the replacement, deploy with `override=true` and the required service account, then verify READY. A separate undeploy is not required.
 
 1. **Set the quota on the API product.** Set the LLM token quota limit, interval and time unit on the product your test app uses ([API product setup](../references/api-product-setup.md)). Read the values back, then wait a few minutes for the product cache to refresh.
 2. **Review the diff.** Routing and authentication are unchanged, no limit is hardcoded in the proxy, and each call is counted once.

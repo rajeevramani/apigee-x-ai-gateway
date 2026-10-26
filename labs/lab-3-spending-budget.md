@@ -20,7 +20,8 @@ on the API Product enough for the budget to be tested, including any applicable
 operation-level overrides. Do not change the token quota policies.
 
 Save a new source bundle and ZIP in ./ai-gateway/lab-3, with
-deployment steps and a small test plan.
+deployment steps and copyable, configuration-specific curl test commands.
+Follow the skill’s operator-run test handoff requirements. Cover success with usage-based synthetic cost calculation, bounded budget exhaustion and distinct budget rejection without token-quota interference.
 ```
 
 ## What you get
@@ -36,6 +37,8 @@ deployment steps and a small test plan.
 Cost is counted after each call, so this is **not a hard spending ceiling**. Synthetic prices are never your real bill.
 
 ## Deploy
+
+This replaces the previous lab’s revision. Follow [revision replacement](../references/model-routing.md#replacing-a-deployed-revision): inspect the current deployment, approve the replacement, deploy with `override=true` and the required service account, then verify READY. A separate undeploy is not required.
 
 1. **Pick a tiny test budget,** for example $0.01 per hour (`10000` micro-USD).
 2. **Set the product custom attributes** the agent lists ([API product setup](../references/api-product-setup.md)):

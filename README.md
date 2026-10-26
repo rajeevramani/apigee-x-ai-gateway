@@ -83,8 +83,11 @@ Ask me for the other details you need and explain any decisions I
 have to make.
 
 Save the source bundle and an importable ZIP in ./ai-gateway/lab-1,
-with setup steps for me and a small manual test plan. Keep test calls
-cheap: short "hello" messages, few calls and a small output limit.
+with setup steps and copyable, configuration-specific curl test commands
+following the skill's operator-run test handoff requirements. Cover both
+aliases succeeding and missing/unknown aliases, streaming and invalid
+caller keys being rejected. Keep calls cheap: short "hello" messages,
+a bounded call count and a small output limit.
 
 I will do all cloud setup, deployment and testing myself. Don't access
 my cloud account and never ask me to paste secrets.
